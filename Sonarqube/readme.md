@@ -68,3 +68,23 @@ alternatives --config java
 ./sonar.sh status
 ---copy public ip and paste on browser with port no :8080
 login the sonarqube 
+
+------creating project on sonarqube------------
+projects - new project -name -setup - generate token - (my-token-name)- save - continue - language -java -maven - copy project (save) 
+
+-----------Slave project--------
+sudo -i
+apt update 
+update-alternatives --config java
+      :11
+paste the copied project 
+ls
+
+--------------go to he sonarqube project ---------
+see  
+
+quality gates - create new -name -save - add condition -duplicated block - error:1 - add condition - set as default 
+
+--------------slave project ------------
+paste the copied project 
+see on sonarqube projects (failed) 
