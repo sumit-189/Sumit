@@ -1,0 +1,87 @@
+copy public ip of master 
+        :8080  -> setting up jenkins 
+------------connect Slave ------------------------
+sudo -i
+apt update 
+update-alternatives --config java
+        :0
+
+jenkins -> node = relaunch 
+update-alternatives --config java 
+        :1
+------------------------------------------
+public ip of sonarqube :9000 
+connect sonarqube--------
+sudo -i
+yum update 
+cd /opt/sonar/bin/linux..
+./sonar.sh start 
+./sonar.sh status
+--------refresh--------------------------
+login the sonarqube 
+quality gates ->  previous -> set as default 
+---SCM-pipeline 
+  pipeline syntax 
+  sh:shell script
+  paste the project you paste on notepad (maven project)
+  generate -> copy 
+pipeline.groovy 
+  paste on test stage   sh '''  /opt/maven/bin/mvn clean verify sonar:sonar \\
+                                -Dsonar.projectKey=new-studentapp \\
+                                -Dsonar.host.url=http://172.31.21.29:9000 \\         (private ip of sonar)
+                                -Dsonar.login=1bdbff47xvxdiuibz75t8787849bzkakxmbcg'''
+add on git using 
+    git add .
+    git commit -m "code-test successfully"
+    git push origin main
+go to pipeline and build now 
+refresh sonarqube
+jenkins -- plugins ---sonarqube scanner   &    sonar quality gates 
+restart jenkins 
+
+slave                 ------------------------ 0   -> relaunch      ------------------- 1
+
+manage jenkins -> system
+sonarqube installation 
+name : sonar
+url: http:/172.32.21.29:9000/ ----------- private ip of sonar 
+add -> jenkins 
+kind : secret text 
+secret : paste secret key that you saved on Notepad 
+id : Sonar_cred
+Add
+select credential 
+apply and save 
+
+pipeline     ->    pipeline syntax
+with sonaeqube 
+credential .
+copy generated pipeline 
+  withSonarQubeEnv{installationName: 'sonar' ,credentialsId: 'sonar-cred'} { 
+   sh ' /opt/maven/bin/mvn clean verify sonar:sonar ' 
+} 
+paste on pipeline.groovy 
+pipeline -> build now 
+
+SQ  -> quality gates  -- select created one   and set as default 
+pipeline -> build now 
+SQ  -> failed but see on pipeline 
+add stage on pipeline.groovy  after test stage  with name : Quality_gate
+pipeline syntax -> wait for qualitygate -> timeout: 10 minute 
+generate pipeline script 
+copy and paste on Quality gate 
+    stage('Quality_Gate') {
+        steps { 
+            timeout{10} { 
+        }
+            waitForQualityGate true
+        }
+    }
+
+SQ   -> administrator - configuration  -> webbooks  -> create 
+name -> URL : jenkins
+http://privateip:8080/sonarqube-webbooks/
+create 
+
+pipeline  -> build now 
+note : pipeline will abort at particular stage 
