@@ -1,0 +1,15 @@
+add a stage after quality gate  named Artifact-stage 
+install aws cli --> linux --> copy 
+Slave connect 
+    add a role 
+    apt install unzip -y 
+    ls
+    aws  s3 ls
+sonar -> set as default
+pipeline syntax 
+    sh:shell script
+    aws s3 cp target/studentapp.war s3://my-bucket./
+    generate script
+paste the generated script into Artifact stage 
+build now 
+see on bucket 
