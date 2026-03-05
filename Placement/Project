@@ -1,0 +1,147 @@
+software: project 
+   project: 
+      frontend 
+      backend
+      database
+   
+   Frontend:
+      index.html(landing page)
+      webserver
+        apache
+        nginx
+        httpd
+        s3 buckets
+        etc
+   Backend:
+      Applications Business logic
+      Appserver
+        tomcat
+        jboss
+        wildfly
+        etc
+   Database:
+       Applcation Data
+       Database server
+         mysql
+         mongodb
+         etc
+  
+  Technology Stacks:
+    Frontend : ﻿Angular js 
+    Backend: Spring boot
+    Database: Mysql, Mongodb
+  
+  Poject Nature:
+    Microservice Based Arch
+    15 Frontend 
+    15 Backends
+   
+  Client Details:
+    Domain: CRM Application (Coustomer Relationsip Management)
+    Domain Name: dyl.com
+    Application : CRM Application
+    Located: America
+     
+    Domain: Airlines
+    Domain Name iata.org
+    Clinet: Canada
+    
+    Domain: Realestate
+    Domain Name: Inbestment.com
+    Application: Marketing
+    Located: Genmany
+    
+    Domain: Ecommerce
+    Domain Name: igp.com
+    Application: Ecommerce
+    Located: Mumbai
+     
+  Team Size:
+    15 Members 
+    4 developers
+    4 devops engineer(1 devops lead, 1 senior, 1 junior, 1 intern)
+    4 testing team
+    3 managers
+    
+  SDLC:
+    Agile Methodology
+    Sprint size Between 2 weeks to 6 weeks
+    Sprint 4 weeks
+    Daily scrum call (standup call)
+      tickets discussion
+    Sprint review meeting 
+    if all tasks are completed then we have a prod deployement
+     
+  Branching Stratergy:
+    As shown in diagram
+    
+  Roles And Responsibilities:
+    Managing the repositories
+    Creating of repositories
+    Access managment of repos
+    webooks
+    managing the resources
+    managing the instances
+    plugins management 
+    CICD pipeline
+    Modifying exsting pipeline
+    Creating pipelines from scratch
+    manageing the multibranch pipleine
+    managing the nodes(slaves)
+    Updating the exsting modules
+    creating the code from scratch
+    managing the terraform state file
+    adding the new resouce in exsting module
+    creating the docker files
+    creating containers from them
+    push pull oprations on central repos
+    optimizing the docker file
+    managing the deployments 
+    managing the deamonsets
+    managing the ingress
+    manging the pods
+    managing the services
+    optimzing the cluster
+
+
+> 
+    Project deployment in Instance 
+    Step 1:
+        Configure database
+        apt install mysql-server -y
+        mysql_secure_installation
+        mysql -uroot -p
+        >> create user linux identified by "Redhat";
+        >> grant all privileges on *.* to linux;
+        >> flush privileges;
+        >> create database flightdb;
+        >> exit
+    
+     Step2:
+        Deploy Backend:
+         cd Flight-reservation
+         cd FlightReservationSystem
+         apt install openjdk-17-jdk -y
+         apt install maven -y
+         #Configure Creds of DB
+         vim application.properties
+           Add database creds
+         cp -rvf application.properties ./src/main/resources/
+   
+     Step3:
+         cd frontend/
+         apt install nodejs npm -y
+         ls -a
+         vim .env
+           add Backend URL
+         npm install
+         npm run build
+         apt install apache2 -y
+         cp -rvf dist/* /var/www/html/
+         systemctl start apache2
+     
+   
+     Step 4:
+       mvn clean package
+       cd target/
+       java -jar flightreservationApplication-0.0.1-SNAPSHOT.jar
